@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaproszenie</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .top-left { position: absolute; top: 10px; left: 10px; }
+        .top-right { position: absolute; top: 10px; right: 10px; }
+        .bottom-center { position: absolute; bottom: 10px; }
+        #current-time {
+            position: absolute;
+            bottom: 40px; /* Przesunięcie godziny poniżej ostatniego tekstu */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left" id="countdown">Przyjęcie Urodzinowe Odbędzie Się Za: </div>
+    <h1>Serdecznie zapraszam na przyjęcie urodzinowe [18]</h1>
+    <h2>Zuzannę Bożek wraz z osobą towarzyszącą / lub bez</h2>
+    <p>Które odbędzie się</p>
+    <p>Dnia 11.07.2025 o 18:00</p>
+    <p>W lokalu Vita Miechów</p>
+    <h2>Proszę o potwierdzenie obecności</h2>
+    <p>Do dnia 27.06.2025</p>
+    <p>Numer telefonu: 576-365-135 lub Messenger</p>
+    <div class="bottom-center" id="confirmation-countdown">Pozostały Czas Do Potwierdzenia Obecności: </div>
+    
+    <div id="current-time">Local Time: Tekst #1</div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("current-time").innerText = "Czas Lokalny: " + now.toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        function countdown(targetDate, elementId, message) {
+            function updateCountdown() {
+                const now = new Date();
+                const target = new Date(targetDate);
+                const diff = target - now;
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+                    document.getElementById(elementId).innerText = `${message} ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                } else {
+                    document.getElementById(elementId).innerText = "Wydarzenie już się odbyło!";
+                }
+            }
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+        
+        countdown("2025-07-11T18:00:00", "countdown", "Przyjęcie Urodzinowe Odbędzie Się Za:");
+        countdown("2025-06-27T23:59:59", "confirmation-countdown", "Pozostały Czas Do Potwierdzenia Obecności:");
+    </script>
+</body>
+</html>
